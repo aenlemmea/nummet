@@ -1,0 +1,17 @@
+build/
+code/
+.vscode/
+.code/
+cache/
+.cache/
+*.mod
+
+.vim/
+*.vim
+*.swp
+*.swap
+*.cache
+.vimfiles/
+
+idea/
+vscode/
