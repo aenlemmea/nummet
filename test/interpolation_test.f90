@@ -14,7 +14,9 @@ module interpolation_test
         new_unittest("Read Test", test_valid_read), &
         new_unittest("Diff Table Gen", test_valid_gen_diff_table), &
         new_unittest("Backward y_xp", test_valid_backward), &
-        new_unittest("Forward y_xp", test_valid_forward) &
+        new_unittest("Forward y_xp", test_valid_forward), &
+        new_unittest("Divided Diff Table Gen", test_valid_gen_div_diff_table), &
+        new_unittest("Divided Diff y_xp", test_valid_divdiff) &
         !new_unittest("invalid", test_invalid_read, should_fail=.true.) &
         ]
     end subroutine collect_suite_interpolation
@@ -29,6 +31,47 @@ module interpolation_test
         call read_table_from_array(x_in, y_in)
     end subroutine setup
 
+    subroutine test_valid_divdiff(error) 
+        type(error_type), allocatable, intent(out) :: error
+        integer :: x_sz
+        real :: expected
+        real, parameter :: tolerance = 1e-6
+
+        call setup(x_sz)
+        expected = divdiff(x_sz, 1896.0)
+        call check(error, abs(expected - 56.8671874875) < tolerance)
+    end subroutine test_valid_divdiff
+
+    subroutine test_valid_gen_div_diff_table(error)
+        type(error_type), allocatable, intent(out) :: error
+        integer :: x_sz
+        real, parameter :: tolerance = 1e-6
+
+        call setup(x_sz)
+        call generate_div_diff(x_sz)
+
+        ! Strangely the values of this diff_table are similar to
+        ! the one in forward and backward tables,
+        ! except they are divided by 10 for the first column
+        call check(error, abs(diff_table(1, 2) - 2.0000) < tolerance)
+        call check(error, abs(diff_table(2, 2) - 1.5000) < tolerance)
+        call check(error, abs(diff_table(3, 2) - 1.2000) < tolerance)
+        call check(error, abs(diff_table(4, 2) - 0.8000) < tolerance)
+
+        call check(error, abs(diff_table(1, 3) - (-0.0250)) < tolerance)
+        call check(error, abs(diff_table(2, 3) - (-0.0150)) < tolerance)
+        call check(error, abs(diff_table(3, 3) - (-0.0200)) < tolerance)
+
+        call check(error, abs(diff_table(1, 4) - 0.0003333) < tolerance)
+        call check(error, abs(diff_table(2, 4) - (-0.000166)) < tolerance)
+
+        call check(error, abs(diff_table(1, 5) - (-0.0000125)) < tolerance)
+
+        call free_arrays()
+        if (allocated(error)) return
+    end subroutine test_valid_gen_div_diff_table
+
+
     subroutine test_valid_forward(error)
         type(error_type), allocatable, intent(out) :: error
         integer :: x_sz
@@ -36,10 +79,8 @@ module interpolation_test
         real :: expected
 
         call setup(x_sz)
-        expected = forward(x_sz, 1895)
+        expected = forward(x_sz, 1895.0)
         call check(error, abs(expected - 54.8528) < tolerance)
-
-        call free_arrays()
     end subroutine test_valid_forward
 
 
@@ -50,10 +91,8 @@ module interpolation_test
         real :: expected
 
         call setup(x_sz)
-        expected = backward(x_sz, 1925)
+        expected = backward(x_sz, 1925.0)
         call check(error, abs(expected - 96.8368) < tolerance)
-
-        call free_arrays()
     end subroutine test_valid_backward
 
     ! | A(1,1)   A(2,1)   A(3,1)   A(4,1)   A(5,1)  |   -> First column = y

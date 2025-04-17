@@ -9,9 +9,9 @@ Done in a Test Driven Development fashion using [test-drive](https://github.com/
 ## Contents
 
 1. Interpolation:
-    1. [ ] Newton's Forward
-    2. [ ] Newton's Backward
-    3. [ ] Newton's Divided Difference
+    1. [x] Newton's Forward
+    2. [x] Newton's Backward
+    3. [x] Newton's Divided Difference
     4. [ ] Lagrange's
 2. DiffyQ:
     1. [ ] Range-Kutta 2nd Order (Modified Euler)
@@ -33,3 +33,9 @@ fpm test
 ## TODO
 
 - [ ] Switch to using ISO types.
+
+
+## Notes
+
+- Newton's Backward: p + i - 1
+- Newton's Forward:  p - i + 1
