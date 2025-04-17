@@ -1,5 +1,6 @@
 module interpolation_test
     use newton
+    use lagrange
     use testdrive, only : new_unittest, unittest_type, error_type, check
     implicit none
     private
@@ -16,7 +17,8 @@ module interpolation_test
         new_unittest("Backward y_xp", test_valid_backward), &
         new_unittest("Forward y_xp", test_valid_forward), &
         new_unittest("Divided Diff Table Gen", test_valid_gen_div_diff_table), &
-        new_unittest("Divided Diff y_xp", test_valid_divdiff) &
+        new_unittest("Divided Diff y_xp", test_valid_divdiff), &
+        new_unittest("Lagrange y_xp", test_valid_lagrange) &
         !new_unittest("invalid", test_invalid_read, should_fail=.true.) &
         ]
     end subroutine collect_suite_interpolation
@@ -30,6 +32,17 @@ module interpolation_test
 
         call read_table_from_array(x_in, y_in)
     end subroutine setup
+    
+    subroutine test_valid_lagrange(error) 
+        type(error_type), allocatable, intent(out) :: error
+        integer :: x_sz
+        real :: expected 
+        real, parameter :: tolerance = 1e-6
+
+        call setup(x_sz)
+        expected = lagrange_interpolate(x_sz, 1896.0)
+        call check(error, abs(expected - 56.8671875) < tolerance)
+    end subroutine test_valid_lagrange
 
     subroutine test_valid_divdiff(error) 
         type(error_type), allocatable, intent(out) :: error

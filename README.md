@@ -12,7 +12,7 @@ Done in a Test Driven Development fashion using [test-drive](https://github.com/
     1. [x] Newton's Forward
     2. [x] Newton's Backward
     3. [x] Newton's Divided Difference
-    4. [ ] Lagrange's
+    4. [x] Lagrange's
 2. DiffyQ:
     1. [ ] Range-Kutta 2nd Order (Modified Euler)
     2. [ ] Euler's Method
