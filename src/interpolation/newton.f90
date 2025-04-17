@@ -169,6 +169,7 @@ end subroutine generate_div_diff
 ! @params n: size of x array
 ! @params x_p : Point to interpolate
 ! @result y_xp: The value of x_p post interpolation
+! picked when unequal intervals
 function divdiff(n, x_p) result(y_xp)
     integer, intent(in) :: n
     real, intent(in) :: x_p 
