@@ -1,5 +1,5 @@
 module diffyq_test
-    use range_kutta
+    use diffyq
     use rk_two
     use rk_fourth
     use testdrive, only : new_unittest, unittest_type, error_type, check
@@ -15,14 +15,15 @@ module diffyq_test
         new_unittest("RK: init_data", test_valid_init), &
         new_unittest("RK_Two: y_req", test_valid_two), &
         new_unittest("RK_Two: y_req(heun)", test_valid_two_heun), &
-        new_unittest("RK_Fourth: y_req", test_valid_fourth) &
+        new_unittest("RK_Fourth: y_req", test_valid_fourth), &
+        new_unittest("Euler: y_req", test_valid_euler) &
         ! new_unittest("invalid", test_invalid, should_fail=.true.) &
         ]
 
     end subroutine collect_suite_diffyq
 
     subroutine setup(test_prob)
-        type(rk_prob), intent(out) :: test_prob
+        type(diffyq_prob), intent(out) :: test_prob
         procedure(eqn_interface), pointer :: f_ptr => null()
 
         f_ptr => test_f
@@ -37,7 +38,7 @@ module diffyq_test
 
     subroutine test_valid_init(error)
         type(error_type), allocatable, intent(out) :: error
-        type(rk_prob) :: test_prob
+        type(diffyq_prob) :: test_prob
         call setup(test_prob)
 
         call check(error, test_prob%t, 0.0)
@@ -48,10 +49,17 @@ module diffyq_test
         if (allocated(error)) return
     end subroutine test_valid_init
 
+    subroutine test_valid_euler(error)
+        type(error_type), intent(out), allocatable :: error
+        
+        ! call setup(test_prob)
+        ! call check(error, abs(solver%solve - ))
+    end subroutine test_valid_euler
+
     subroutine test_valid_two(error)
         type(error_type), allocatable, intent(out) :: error
-        class(range_kutta_base), allocatable :: solver
-        type(rk_prob) :: test_prob
+        class(solver_base), allocatable :: solver
+        type(diffyq_prob) :: test_prob
         real, parameter :: tolerance = 1e-5
 
         call setup(test_prob)
@@ -64,8 +72,8 @@ module diffyq_test
 
     subroutine test_valid_two_heun(error)
         type(error_type), allocatable, intent(out) :: error
-        class(range_kutta_base), allocatable :: solver
-        type(rk_prob) :: test_prob
+        class(solver_base), allocatable :: solver
+        type(diffyq_prob) :: test_prob
         real, parameter :: tolerance = 1e-5
 
         call setup(test_prob)
@@ -78,8 +86,8 @@ module diffyq_test
 
     subroutine test_valid_fourth(error)
         type(error_type), allocatable, intent(out) :: error
-        class(range_kutta_base), allocatable :: solver
-        type(rk_prob) :: test_prob
+        class(solver_base), allocatable :: solver
+        type(diffyq_prob) :: test_prob
         real, parameter :: tolerance = 1e-5
 
         call setup(test_prob)

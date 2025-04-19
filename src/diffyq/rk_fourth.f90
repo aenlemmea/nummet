@@ -6,10 +6,10 @@
 
 ! y_req = y + (1/6)*(k1 + 2*k2 + 2*k3 + k4)
 module rk_fourth
-    use range_kutta
+    use diffyq
     implicit none
 
-    type, extends(range_kutta_base) :: rk_fourth_solve
+    type, extends(solver_base) :: rk_fourth_solve
         contains
         procedure :: solve => solve_fourth
     end type rk_fourth_solve
@@ -18,7 +18,7 @@ module rk_fourth
 
     function solve_fourth(self, prob) result(y_req)
         class(rk_fourth_solve), intent(inout) :: self
-        type(rk_prob), intent(inout) :: prob
+        type(diffyq_prob), intent(inout) :: prob
         real :: y_req
         integer :: steps, i
 
@@ -33,7 +33,7 @@ module rk_fourth
 
     function solve_fourth_once(self, prob) result(y_req)
         class(rk_fourth_solve), intent(inout) :: self
-        type(rk_prob), intent(inout) :: prob
+        type(diffyq_prob), intent(inout) :: prob
         real :: y_req, k1, k2, k3, k4
 
         k1 = prob%h * prob%f(prob%t, prob%y)

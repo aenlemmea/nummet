@@ -10,10 +10,10 @@
 ! y_req = y + 0.5 * (k1 + k2)
 
 module rk_two
-    use range_kutta
+    use diffyq
     implicit none
 
-    type, extends(range_kutta_base) :: rk_two_solve
+    type, extends(solver_base) :: rk_two_solve
         contains
         procedure :: solve => solve_two
     end type rk_two_solve
@@ -22,7 +22,7 @@ module rk_two
 
     function solve_two(self, prob) result(y_req)
         class(rk_two_solve), intent(inout) :: self
-        type(rk_prob), intent(inout) :: prob
+        type(diffyq_prob), intent(inout) :: prob
         real :: y_req
         integer :: steps, i
 
@@ -37,7 +37,7 @@ module rk_two
 
     function solve_two_once(self, prob) result(y_req)
         class(rk_two_solve), intent(inout) :: self
-        type(rk_prob), intent(inout) :: prob
+        type(diffyq_prob), intent(inout) :: prob
         real :: y_req, k1, k2, k3, k4
 
         k1 = prob%h * prob%f(prob%t, prob%y)
@@ -49,7 +49,7 @@ module rk_two
 
     function solve_two_once_heun(self, prob) result(y_req)
         class(rk_two_solve), intent(inout) :: self
-        type(rk_prob), intent(inout) :: prob
+        type(diffyq_prob), intent(inout) :: prob
         real :: y_req, k1, k2
 
         k1 = prob%h * prob%f(prob%t, prob%y)
