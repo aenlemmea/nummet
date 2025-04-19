@@ -2,6 +2,7 @@ module diffyq_test
     use diffyq
     use rk_two
     use rk_fourth
+    use euler
     use testdrive, only : new_unittest, unittest_type, error_type, check
     implicit none
     private
@@ -51,9 +52,16 @@ module diffyq_test
 
     subroutine test_valid_euler(error)
         type(error_type), intent(out), allocatable :: error
-        
-        ! call setup(test_prob)
-        ! call check(error, abs(solver%solve - ))
+        class(solver_base), allocatable :: solver
+        type(diffyq_prob) :: test_prob
+        real, parameter :: tolerance = 1e-4
+
+        call setup(test_prob)
+        allocate(euler_solve :: solver)
+        if (allocated(solver)) then
+            call check(error, abs(solver%solve(test_prob) - 0.9075) < tolerance)
+            if (allocated(error)) return
+        end if
     end subroutine test_valid_euler
 
     subroutine test_valid_two(error)

@@ -15,7 +15,7 @@ Done in a Test Driven Development fashion using [test-drive](https://github.com/
     4. [x] Lagrange's
 2. DiffyQ:
     1. [x] Range-Kutta 2 (Modified Euler)
-    2. [ ] Euler's Method
+    2. [x] Euler's Method
     3. [x] Range-Kutta 4
     4. [ ] Milne's Predictor Corrector 
     5. [ ] Finite Differences BVP

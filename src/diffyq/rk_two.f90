@@ -38,7 +38,7 @@ module rk_two
     function solve_two_once(self, prob) result(y_req)
         class(rk_two_solve), intent(inout) :: self
         type(diffyq_prob), intent(inout) :: prob
-        real :: y_req, k1, k2, k3, k4
+        real :: y_req, k1, k2
 
         k1 = prob%h * prob%f(prob%t, prob%y)
         k2 = prob%h * prob%f((prob%t + (prob%h / 2.0)), (prob%y + (k1 / 2.0)))
