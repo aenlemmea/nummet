@@ -1,5 +1,6 @@
 module diffyq_test
     use range_kutta
+    use rk_two
     use rk_fourth
     use testdrive, only : new_unittest, unittest_type, error_type, check
     implicit none
@@ -12,6 +13,8 @@ module diffyq_test
 
         testsuite = [&
         new_unittest("RK: init_data", test_valid_init), &
+        new_unittest("RK_Two: y_req", test_valid_two), &
+        new_unittest("RK_Two: y_req(heun)", test_valid_two_heun), &
         new_unittest("RK_Fourth: y_req", test_valid_fourth) &
         ! new_unittest("invalid", test_invalid, should_fail=.true.) &
         ]
@@ -45,11 +48,39 @@ module diffyq_test
         if (allocated(error)) return
     end subroutine test_valid_init
 
+    subroutine test_valid_two(error)
+        type(error_type), allocatable, intent(out) :: error
+        class(range_kutta_base), allocatable :: solver
+        type(rk_prob) :: test_prob
+        real, parameter :: tolerance = 1e-5
+
+        call setup(test_prob)
+        allocate(rk_two_solve :: solver)
+        if (allocated(solver)) then
+            call check(error, abs(solver%solve(test_prob) - 0.91463) < tolerance)
+            if (allocated(error)) return
+        end if
+    end subroutine test_valid_two
+
+    subroutine test_valid_two_heun(error)
+        type(error_type), allocatable, intent(out) :: error
+        class(range_kutta_base), allocatable :: solver
+        type(rk_prob) :: test_prob
+        real, parameter :: tolerance = 1e-5
+
+        call setup(test_prob)
+        allocate(rk_two_solve :: solver)
+        if (allocated(solver)) then
+            call check(error, abs(solver%solve(test_prob) - 0.91463) < tolerance)
+            if (allocated(error)) return
+        end if
+    end subroutine test_valid_two_heun
+
     subroutine test_valid_fourth(error)
         type(error_type), allocatable, intent(out) :: error
         class(range_kutta_base), allocatable :: solver
         type(rk_prob) :: test_prob
-        real, parameter :: tolerance = 1e-3
+        real, parameter :: tolerance = 1e-5
 
         call setup(test_prob)
         allocate(rk_fourth_solve :: solver)
