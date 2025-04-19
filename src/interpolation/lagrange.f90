@@ -1,4 +1,5 @@
 module lagrange
+    ! Couple with the Newton module to use its arrays since the data schema is same.
     use newton, only: read_table, read_table_from_array, x, y, free_arrays
     implicit none
     contains

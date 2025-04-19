@@ -42,6 +42,8 @@ module interpolation_test
         call setup(x_sz)
         expected = lagrange_interpolate(x_sz, 1896.0)
         call check(error, abs(expected - 56.8671875) < tolerance)
+        call free_arrays()
+        if (allocated(error)) return
     end subroutine test_valid_lagrange
 
     subroutine test_valid_divdiff(error) 
@@ -53,6 +55,8 @@ module interpolation_test
         call setup(x_sz)
         expected = divdiff(x_sz, 1896.0)
         call check(error, abs(expected - 56.8671874875) < tolerance)
+        call free_arrays()
+        if (allocated(error)) return
     end subroutine test_valid_divdiff
 
     subroutine test_valid_gen_div_diff_table(error)
@@ -94,6 +98,8 @@ module interpolation_test
         call setup(x_sz)
         expected = forward(x_sz, 1895.0)
         call check(error, abs(expected - 54.8528) < tolerance)
+        call free_arrays()
+        if (allocated(error)) return
     end subroutine test_valid_forward
 
 
@@ -106,6 +112,7 @@ module interpolation_test
         call setup(x_sz)
         expected = backward(x_sz, 1925.0)
         call check(error, abs(expected - 96.8368) < tolerance)
+        call free_arrays()
     end subroutine test_valid_backward
 
     ! | A(1,1)   A(2,1)   A(3,1)   A(4,1)   A(5,1)  |   -> First column = y

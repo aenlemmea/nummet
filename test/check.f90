@@ -3,6 +3,7 @@ program check
     use, intrinsic :: iso_fortran_env, only : error_unit
     use testdrive, only : run_testsuite, new_testsuite, testsuite_type
     use interpolation_test, only: collect_suite_interpolation
+    use diffyq_test, only: collect_suite_diffyq
     implicit none
     integer :: stat, is
     type(testsuite_type), allocatable :: testsuites(:)
@@ -11,7 +12,8 @@ program check
     stat = 0
 
     testsuites = [&
-    new_testsuite("Interpolation Suite", collect_suite_interpolation) &
+    new_testsuite("Interpolation Suite", collect_suite_interpolation), &
+    new_testsuite("DiffyQ Suite", collect_suite_diffyq) &
     ! new_testsuite("suite2", collect_suite2) &
     ]
 

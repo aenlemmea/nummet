@@ -14,13 +14,23 @@ Done in a Test Driven Development fashion using [test-drive](https://github.com/
     3. [x] Newton's Divided Difference
     4. [x] Lagrange's
 2. DiffyQ:
-    1. [ ] Range-Kutta 2nd Order (Modified Euler)
+    1. [ ] Range-Kutta 2 (Modified Euler)
     2. [ ] Euler's Method
+    3. [x] Range-Kutta 4
+    4. [ ] Milne's Predictor Corrector 
+    5. [ ] Finite Differences BVP
+    6. [ ] Gauss Seidel
+    7. [ ] Taylor Series Method
 3. Algebraic Equations:
     1. [ ] Bisection 
     2. [ ] Newton-Rhapson
     3. [ ] Regula Falsi
 4. TBD
+
+> ![NOTE]
+> DiffyQ's return value is currently not precision controlled. It is on TODO for now. The output is correct.
+
+Note: DiffyQ's support first order derivatives only. The `rk_prob` type should be used as a derived type to set a problem using `init_prob`. The `eqn_interface` provides a general interface to represent the diffyq.
 
 ## Running Tests
 
@@ -33,6 +43,7 @@ fpm test
 ## TODO
 
 - [ ] Switch to using ISO types.
+- [ ] Look into real(dp) for diffyQ
 
 
 ## Notes
