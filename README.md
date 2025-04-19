@@ -31,8 +31,7 @@ Done in a Test Driven Development fashion using [test-drive](https://github.com/
 > DiffyQ's return value is currently not precision controlled. It is on TODO 
 for now. The output is correct.
 
-
-Note: DiffyQ's support first order derivatives only. The `rk_prob` type should be used as a derived type to set a problem using `init_prob`. The `eqn_interface` provides a general interface to represent the diffyq.
+Note: DiffyQ's support first order derivatives only. The `rk_prob` type should be used as a derived type to set a problem using `init_prob`. The `eqn_interface` provides a general interface to represent the diffyq. 
 
 ## Running Tests
 
@@ -46,6 +45,9 @@ fpm test
 
 - [ ] Switch to using ISO types.
 - [ ] Look into real(dp) for diffyQ
+- [ ] Use `select type` to extract the `solve` implementations in the diffyQ modules as a single function[^1].
+
+[^1]: I am aware of the code repetition in the diffyq modules (the driver function is very much the same). The only reason they are kept that way is the function call changes in each. A simple `select type` would do the trick is what I am expecting but in an ideal case some metaprogramming way would be nice.
 
 
 ## Notes

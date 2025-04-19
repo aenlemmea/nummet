@@ -10,6 +10,7 @@ module diffyq ! For first order derivatives
         procedure :: next => next_iter
     end type diffyq_prob
 
+    ! Base solver type to offer a single point of entry "solve"
     type, abstract, public :: solver_base
         contains
         procedure(solve_interface), deferred :: solve

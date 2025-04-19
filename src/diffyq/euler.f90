@@ -20,7 +20,7 @@ module euler
         steps = int((prob%x_p - prob%t) / prob%h + 0.5)
 
         do i = 1, steps
-            prob%y_req = solve_euler_once(self, prob)
+            prob%y_req = solve_euler_once(self, prob) 
             call prob%next()
         end do
         y_req = prob%y_req
