@@ -27,8 +27,10 @@ Done in a Test Driven Development fashion using [test-drive](https://github.com/
     3. [ ] Regula Falsi
 4. TBD
 
-> ![NOTE]
-> DiffyQ's return value is currently not precision controlled. It is on TODO for now. The output is correct.
+> [!CAUTION]
+> DiffyQ's return value is currently not precision controlled. It is on TODO 
+for now. The output is correct.
+
 
 Note: DiffyQ's support first order derivatives only. The `rk_prob` type should be used as a derived type to set a problem using `init_prob`. The `eqn_interface` provides a general interface to represent the diffyq.
 
