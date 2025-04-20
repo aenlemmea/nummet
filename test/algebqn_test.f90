@@ -20,10 +20,10 @@ module algebqn_test
     end subroutine collect_suite_algebqn
 
     subroutine setup(test_prob)
-        type(algeb_prob_bisec), intent(out) :: test_prob
+        type(bisection_solver), intent(out) :: test_prob
         procedure(eqn_interface), pointer :: f_ptr => null()
         f_ptr => test_f
-        test_prob = init_prob(f_ptr, -1.0, -1.0)
+        call test_prob%init(f_ptr, -1.0, -1.0)
     end subroutine setup
 
     function test_f(x) result(out)
@@ -39,15 +39,15 @@ module algebqn_test
     end function test_g
 
     subroutine setup_sec(test_prob)
-        type(algeb_prob_bisec), intent(out) :: test_prob
+        type(bisection_solver), intent(out) :: test_prob
         procedure(eqn_interface), pointer :: g_ptr => null()
         g_ptr => test_g
-        test_prob = init_prob(g_ptr, 1.0, 2.0, .false.)
+        call test_prob%init(g_ptr, 1.0, 2.0, .false.)
     end subroutine setup_sec
 
     subroutine test_valid_init(error)
         type(error_type), allocatable, intent(out) :: error
-        type(algeb_prob_bisec) :: test_prob
+        type(bisection_solver) :: test_prob
         call setup(test_prob)
 
         call check(error, test_prob%a, -1.0)
@@ -59,7 +59,7 @@ module algebqn_test
 
     subroutine test_valid_iter0_interval_bruteforce(error)
         type(error_type), allocatable, intent(out) :: error
-        type(algeb_prob_bisec) :: test_prob
+        type(bisection_solver) :: test_prob
         real, parameter :: tolerance = 1e-5
 
         call setup(test_prob)
@@ -72,7 +72,7 @@ module algebqn_test
 
     subroutine test_valid_interval_find(error)
         type(error_type), allocatable, intent(out) :: error
-        type(algeb_prob_bisec) :: test_prob
+        type(bisection_solver) :: test_prob
         real, parameter :: tolerance = 1e-5
 
         call setup(test_prob)
@@ -86,7 +86,7 @@ module algebqn_test
 
     subroutine test_invalid_iter0_interval_bruteforce(error)
         type(error_type), allocatable, intent(out) :: error
-        type(algeb_prob_bisec) :: test_prob
+        type(bisection_solver) :: test_prob
 
         call setup(test_prob)
         call test_prob%set_first_interval(1, -100)
@@ -96,7 +96,7 @@ module algebqn_test
 
     subroutine test_valid_bisection(error)
         type(error_type), allocatable, intent(out) :: error
-        type(algeb_prob_bisec) :: test_prob
+        type(bisection_solver) :: test_prob
         real, parameter :: tolerance = 1.0e-5
 
         call setup(test_prob)
