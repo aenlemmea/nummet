@@ -24,7 +24,7 @@ Done in a Test Driven Development fashion using [test-drive](https://github.com/
 3. Algebraic Equations:
     1. [x] Bisection 
     2. [ ] Newton-Rhapson
-    3. [ ] Regula Falsi
+    3. [x] Regula Falsi
 4. TBD
 
 > [!NOTE]
