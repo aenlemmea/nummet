@@ -1,6 +1,9 @@
+!! Highly coupled module for the bisection method. Totally not sarcastic :sadface: Yes I am aware of it.
+! The problem with decoupling this is that next_set is very tightly used in the other procedures. 
+! It is not worth to decouple for extraction of a single type.
 module bisection
     implicit none
-    type :: algeb_prob
+    type :: algeb_prob_bisec
         logical :: iter_zero = .true.
         procedure(eqn_interface), pointer, nopass :: f => null()
         real :: a, b, c
@@ -9,7 +12,7 @@ module bisection
         procedure :: set_first_interval
         procedure :: next_set => next_interval_set
         procedure :: bisect => do_bisection
-    end type algeb_prob
+    end type algeb_prob_bisec
 
     abstract interface
         function eqn_interface(x) result(res)
@@ -25,7 +28,7 @@ module bisection
     ! @params tolerance: Convergence threshold (default: 1e-6)
     ! @result root: Approximated root of the equation
     function do_bisection(this, iter, tolerance) result(root)
-        class(algeb_prob), intent(inout) :: this
+        class(algeb_prob_bisec), intent(inout) :: this
         integer, optional, intent(in) :: iter
         real, optional, intent(in) :: tolerance
         integer :: trial, i
@@ -44,7 +47,8 @@ module bisection
         if (present(tolerance)) then
             tol = tolerance
         else
-            tol = 1.0e-6
+            tol = 1.0e-5 !!  NOTE: This affects testing. This indirectly 
+                         !!        controls iterations done. Hence adjust accordingly. 
         end if
 
         bisect: do i = 1, trial
@@ -67,7 +71,7 @@ module bisection
     ! This method is not really to be used. It only illustrates the idea
     ! that the first interval is to be bruteforced
     subroutine set_first_interval(this, from, to)
-        class(algeb_prob), intent(inout) :: this
+        class(algeb_prob_bisec), intent(inout) :: this
         integer, intent(in) :: from, to
         integer :: i
         if (.not. this%iter_zero) then
@@ -101,7 +105,7 @@ module bisection
 
     ! Actual method to change poisition of a, b post iter 0
     subroutine next_interval_set(this)
-        class(algeb_prob), intent(inout) :: this
+        class(algeb_prob_bisec), intent(inout) :: this
 
         if (this%iter_zero) stop "Please use set_first_interval or set iter_zero false by specifying first interval."
 
@@ -114,13 +118,13 @@ module bisection
     end subroutine next_interval_set
 
     subroutine print_prob(this)
-        class(algeb_prob), intent(in) :: this
+        class(algeb_prob_bisec), intent(in) :: this
         print *, "Problem:[a= ", this%a, " b= ", this%b, &
         " c= ", this%c, " iter_zero= ", this%iter_zero, "]"
     end subroutine print_prob
 
     function init_prob(eqn, a, b, iter_zero) result(aprob)
-        type(algeb_prob) :: aprob
+        type(algeb_prob_bisec) :: aprob
         procedure(eqn_interface), pointer :: eqn
         real, intent(in) :: a, b
         logical, optional, intent(in) :: iter_zero

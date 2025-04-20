@@ -46,6 +46,7 @@ fpm test
 
 ## TODO
 
+- [ ] GNUPlot Integration ([ogpf](https://github.com/kookma/ogpf))
 - [ ] Switch to using ISO types.
 - [ ] Look into real(dp) for diffyQ
 - [ ] Use `select type` to extract the `solve` implementations in the diffyQ modules as a single function[^1].
