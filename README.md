@@ -18,14 +18,19 @@ Done in a Test Driven Development fashion using [test-drive](https://github.com/
     2. [x] Euler's Method
     3. [x] Range-Kutta 4
     4. [ ] Milne's Predictor Corrector 
-    5. [ ] Finite Differences BVP
-    6. [ ] Gauss Seidel
     7. [ ] Taylor Series Method
 3. Algebraic Equations:
     1. [x] Bisection 
     2. [ ] Newton-Rhapson
     3. [x] Regula Falsi
-4. TBD
+4. System of Linear Equations
+    1. [ ] Gauss Elimination
+    2. [ ] Gaus Jordan
+    3. [ ] Gauss Seidel
+    4. [ ] LU Factorisation
+5. Finite Differences BVP
+    1. [ ] 2nd Order Solver
+6. TBD
 
 > [!NOTE]
 > Please check `iter_zero` after using `set_first_interval`. Only continue if `iter_zero` is false. If it is true then that indicates that the first interval search was not successfuly. You can override this behaviour by manually specifying the first interval while defining an instance of `algeb_prob` and setting `iter_zero` to false and setting correct `[a,b]` for it. When you do want to use `set_first_interval`, you can ignore `iter_zero` by not providing it in the constructor and setting any random `a,b`
