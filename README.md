@@ -22,16 +22,19 @@ Done in a Test Driven Development fashion using [test-drive](https://github.com/
     6. [ ] Gauss Seidel
     7. [ ] Taylor Series Method
 3. Algebraic Equations:
-    1. [ ] Bisection 
+    1. [x] Bisection 
     2. [ ] Newton-Rhapson
     3. [ ] Regula Falsi
 4. TBD
+
+> [!NOTE]
+> Please check `iter_zero` after using `set_first_interval`. Only continue if `iter_zero` is false. If it is true then that indicates that the first interval search was not successfuly. You can override this behaviour by manually specifying the first interval while defining an instance of `algeb_prob` and setting `iter_zero` to false and setting correct `[a,b]` for it. When you do want to use `set_first_interval`, you can ignore `iter_zero` by not providing it in the constructor and setting any random `a,b`
 
 > [!CAUTION]
 > DiffyQ's return value is currently not precision controlled. It is on TODO 
 for now. The output is correct.
 
-Note: DiffyQ's support first order derivatives only. The `rk_prob` type should be used as a derived type to set a problem using `init_prob`. The `eqn_interface` provides a general interface to represent the diffyq. 
+Note: DiffyQ's support first order derivatives only. The `diffyq_prob` type should be used as a derived type to set a problem using `init_prob`. The `eqn_interface` provides a general interface to represent the diffyq. 
 
 ## Running Tests
 

@@ -20,8 +20,8 @@ module rk_two
 
     contains
 
-    function solve_two(self, prob) result(y_req)
-        class(rk_two_solve), intent(inout) :: self
+    function solve_two(this, prob) result(y_req)
+        class(rk_two_solve), intent(inout) :: this
         type(diffyq_prob), intent(inout) :: prob
         real :: y_req
         integer :: steps, i
@@ -29,14 +29,14 @@ module rk_two
         steps = int((prob%x_p - prob%t) / prob%h + 0.5)
 
         do i = 1, steps
-            prob%y_req = solve_two_once(self, prob)
+            prob%y_req = solve_two_once(this, prob)
             call prob%next()
         end do
         y_req = prob%y_req
     end function solve_two
 
-    function solve_two_once(self, prob) result(y_req)
-        class(rk_two_solve), intent(inout) :: self
+    function solve_two_once(this, prob) result(y_req)
+        class(rk_two_solve), intent(inout) :: this
         type(diffyq_prob), intent(inout) :: prob
         real :: y_req, k1, k2
 
@@ -47,8 +47,8 @@ module rk_two
         y_req = prob%y + k2
     end function solve_two_once
 
-    function solve_two_once_heun(self, prob) result(y_req)
-        class(rk_two_solve), intent(inout) :: self
+    function solve_two_once_heun(this, prob) result(y_req)
+        class(rk_two_solve), intent(inout) :: this
         type(diffyq_prob), intent(inout) :: prob
         real :: y_req, k1, k2
 

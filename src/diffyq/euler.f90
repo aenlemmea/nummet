@@ -11,8 +11,8 @@ module euler
 
     contains
 
-    function solve_euler(self, prob) result(y_req)
-        class(euler_solve), intent(inout) :: self
+    function solve_euler(this, prob) result(y_req)
+        class(euler_solve), intent(inout) :: this
         type(diffyq_prob), intent(inout) :: prob
         real :: y_req
         integer :: steps, i
@@ -20,14 +20,14 @@ module euler
         steps = int((prob%x_p - prob%t) / prob%h + 0.5)
 
         do i = 1, steps
-            prob%y_req = solve_euler_once(self, prob) 
+            prob%y_req = solve_euler_once(this, prob) 
             call prob%next()
         end do
         y_req = prob%y_req
     end function solve_euler
 
-    function solve_euler_once(self, prob) result(y_req)
-        class(euler_solve), intent(inout) :: self
+    function solve_euler_once(this, prob) result(y_req)
+        class(euler_solve), intent(inout) :: this
         type(diffyq_prob), intent(inout) :: prob
         real :: y_req
 

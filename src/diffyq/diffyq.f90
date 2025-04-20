@@ -17,9 +17,9 @@ module diffyq ! For first order derivatives
     end type solver_base
 
     abstract interface ! Mostly for type safety
-        function solve_interface(self, prob) result(y_req)
+        function solve_interface(this, prob) result(y_req)
             import :: solver_base, diffyq_prob
-            class(solver_base), intent(inout) :: self
+            class(solver_base), intent(inout) :: this
             type(diffyq_prob), intent(inout) :: prob
             real :: y_req
         end function solve_interface
