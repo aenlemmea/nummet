@@ -1,4 +1,5 @@
 module algebqn_test
+    use regula_falsi
     use bisection
     use testdrive, only : new_unittest, unittest_type, error_type, check
     implicit none
@@ -14,7 +15,8 @@ module algebqn_test
         new_unittest("Bisection: Iter 0 bruteforce", test_valid_iter0_interval_bruteforce), &
         new_unittest("Bisection: Next interval", test_valid_interval_find), &
         new_unittest("Bisection: root", test_valid_bisection), &
-        new_unittest("Bisection: Iter 0 bruteforce > Invalid", test_invalid_iter0_interval_bruteforce, should_fail = .true.) &
+        new_unittest("Bisection: Iter 0 bruteforce > Invalid", test_invalid_iter0_interval_bruteforce, should_fail = .true.), &
+        new_unittest("Regula-Falsi: root", test_valid_regula_falsi) &        
         ]
 
     end subroutine collect_suite_algebqn
@@ -44,6 +46,17 @@ module algebqn_test
         g_ptr => test_g
         call test_prob%init(g_ptr, 1.0, 2.0, .false.)
     end subroutine setup_sec
+
+    subroutine test_valid_regula_falsi(error)
+        type(error_type), allocatable, intent(out) :: error
+        type(regula_falsi_solver) :: test_prob
+        procedure(eqn_interface), pointer :: g_ptr => null()
+        real, parameter :: tolerance = 1.0e-5
+        g_ptr => test_g
+        call test_prob%init(g_ptr, 1.0, 2.0, .false.)
+        call check(error, abs(test_prob%regula_falsi(25) - 1.60059) < tolerance)
+        if (allocated(error)) return
+    end subroutine test_valid_regula_falsi
 
     subroutine test_valid_init(error)
         type(error_type), allocatable, intent(out) :: error

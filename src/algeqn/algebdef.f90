@@ -7,7 +7,6 @@ module algebdef
         contains
         procedure :: init => init_prob
         procedure :: print => print_prob
-
     end type algeb_prob
 
     abstract interface

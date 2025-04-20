@@ -46,7 +46,7 @@ module bisection
             ! call this%print()
             if (abs(this%f(this%c)) < tol .or. abs(this%b - this%a) < tol) then
                 root = this%c
-                print *, " f(c) < tol @ iter: ", i
+                ! print *, "root: ", root, "@ iter: ", i
                 return
             end if
 
