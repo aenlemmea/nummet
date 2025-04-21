@@ -27,7 +27,7 @@ Done in a Test Driven Development fashion using [test-drive](https://github.com/
     1. [ ] Gauss Elimination
     2. [ ] Gaus Jordan
     3. [ ] Gauss Seidel
-    4. [ ] LU Factorisation
+    4. [x] LU Factorisation [Not Implementing. Use `stdlib_linalg`->`solve_lu`]
 5. Finite Differences BVP
     1. [ ] 2nd Order Solver
 6. TBD
